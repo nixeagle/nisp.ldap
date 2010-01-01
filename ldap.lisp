@@ -1,5 +1,3 @@
-(require :trivial-ldap)
-
 (defpackage #:nisp.ldap
   (:use :cl))
 
