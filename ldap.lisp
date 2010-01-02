@@ -5,7 +5,7 @@
 
 ;;; For eighthbit we use ssh tunnels to LDAP, so make sure this matches
 ;;; up with your local machine name. This may _not_ be localhost!
-(defvar *default-host* "localhsot"
+(defvar *default-host* "localhost"
   "Location of ldap.")
 
 (defvar *default-port* (the integer 2242)
@@ -87,3 +87,5 @@ Note that the newline is not replaced by a space!"
     (while (ldap:results-pending-p ldap)
       (push (ldap:next-search-result ldap) result))
     (nreverse (cdr result))))
+
+
