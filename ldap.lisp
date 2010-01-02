@@ -30,21 +30,22 @@ Defautls to an empty string which means no pass.")
 (defparameter *connections* '()
   "Property list of connections to LDAP.")
 
-
-
 ;;; Load an optional config file, the lack of this should not cause this
 ;;; program to become unusable.
 (load "config.lisp" :if-does-not-exist nil)
 
-(defun make-8b-ldap (&key (user *user*) (pass *pass*)
+(defun make-8b-ldap (&optional (user *user*) (pass *pass*)
                      (base *root-base*))
   "Make an ldap object for 8b's ldap.
 
-We default to anon bind."
+We default to anon bind.
+
+Note that the base should be defined as a concat of base and
+*root-base*."
   (ldap:new-ldap :port *default-port*
                  :user user
                  :pass pass
-                 :base base))
+                 :base (concatenate 'string *root-base* base)))
 
 (defmacro while (test &body body)
   "While, like in most other languages."
@@ -53,7 +54,7 @@ We default to anon bind."
      ,@body))
 
 (defparameter *ldap* (make-8b-ldap))
-(defparameter *anon-ldap* (make-8b-ldap :user "" :pass ""))
+(defparameter *anon-ldap* (make-8b-ldap "" ""))
 
 (defmacro with-ldap (ldap &body body)
   "Execute BODY in the context of LDAP bound to the ldap server."
