@@ -3,6 +3,13 @@
 
 (in-package :nisp.ldap)
 
+;;; Needs to be moved to a seperate utility file or something.
+(defmacro while (test &body body)
+  "While, like in most other languages."
+  `(do ()
+       ((not ,test))
+     ,@body))
+
 ;;; For eighthbit we use ssh tunnels to LDAP, so make sure this matches
 ;;; up with your local machine name. This may _not_ be localhost!
 (defvar *default-host* "localhost"
@@ -46,12 +53,6 @@ Note that the base should be defined as a concat of base and
                  :user user
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
-
-(defmacro while (test &body body)
-  "While, like in most other languages."
-  `(do ()
-       ((not ,test))
-     ,@body))
 
 (defparameter *ldap* (make-8b-ldap))
 (defparameter *anon-ldap* (make-8b-ldap "" ""))
