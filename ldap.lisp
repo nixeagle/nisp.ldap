@@ -91,7 +91,7 @@ Note that the newline is not replaced by a space!"
       unless (eq char #\Newline) collect char)
    'string))
 
-(defun print-single-entry (search-string &key (ldap *anon-ldap*)
+(defun print-single-entry (search-string &key (ldap :anon)
                            attrs)
   (strip-newlines
    (ldap:ldif
