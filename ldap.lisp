@@ -54,6 +54,16 @@ Note that the base should be defined as a concat of base and
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
 
+(setf (getf *connections* :anon) (make-8b-ldap))
+
+(defun make-ldap (ldap-or-keyword
+                  &optional (connections *connections*))
+  "Return an LDAP object, so long as input is an ldap object or a
+  keyword referincing an ldap object."
+  (if (typep ldap-or-keyword 'ldap:ldap)
+      ldap-or-keyword
+      (getf connections ldap-or-keyword)))
+
 (defparameter *ldap* (make-8b-ldap))
 (defparameter *anon-ldap* (make-8b-ldap "" ""))
 
