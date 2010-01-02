@@ -1,6 +1,6 @@
 (defpackage #:nisp.ldap
   (:use :cl)
-  (:export *connections* #:with-ldap))
+  (:export *connections* #:with-ldap #:get-single-entry))
 
 (in-package :nisp.ldap)
 
