@@ -4,9 +4,6 @@
 
 (in-package #:nisp.ldap-system)
 
-(defpackage #:nisp.ldap
-  (:use :cl))
-
 (defsystem :nisp.ldap
   :version "0.0.4"
   :author "James S <dev@nixeagle.org>"
@@ -14,3 +11,9 @@
   :depends-on (:illusion :nistilities :trivial-ldap)
   :components
   ((:file "ldap")))
+
+(defsystem :nisp.8b-ldap
+  :version "0.0.11"
+  :depends-on (:illusion :nistilities :trivial-ldap :nisp.ldap)
+  :components
+  ((:file "8b-ldap")))

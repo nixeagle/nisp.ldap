@@ -1,5 +1,6 @@
 (defpackage #:nisp.ldap
-  (:use :cl))
+  (:use :cl)
+  (:export *connections* #:with-ldap))
 
 (in-package :nisp.ldap)
 
@@ -10,29 +11,6 @@
        ((not ,test))
      ,@body))
 
-;;; For eighthbit we use ssh tunnels to LDAP, so make sure this matches
-;;; up with your local machine name. This may _not_ be localhost!
-(defvar *default-host* "localhost"
-  "Location of ldap.")
-
-(defvar *default-port* (the integer 2242)
-  "Where to look for ldap.
-
-This is not the default LDAP port, but we default to 2242 for ssh
-tunnels to LDAP.")
-
-(defvar *user* ""
-  "User to interact with LDAP as.
-
-Defaults to an empty string which means we are anonymous.")
-
-(defvar *pass* ""
-  "Password to auth to LDAP with.
-
-Defautls to an empty string which means no pass.")
-
-(defvar *root-base* "dc=eighthbit,dc=net"
-  "All 8b LDAP things are under this base.")
 
 (defparameter *connections* '()
   "Property list of connections to LDAP.")
@@ -41,21 +19,6 @@ Defautls to an empty string which means no pass.")
 ;;; program to become unusable.
 (load "config.lisp" :if-does-not-exist nil)
 
-(defun make-8b-ldap (&optional (user "") (pass "")
-                     (base ""))
-  "Make an ldap object for 8b's ldap.
-
-We default to anon bind.
-
-Note that the base should be defined as a concat of base and
-*root-base*."
-  (ldap:new-ldap :host *default-host*
-                 :port *default-port*
-                 :user user
-                 :pass pass
-                 :base (concatenate 'string *root-base* base)))
-
-(setf (getf *connections* :anon) (make-8b-ldap))
 
 (defun make-ldap (ldap-or-keyword
                   &optional (connections *connections*))
@@ -65,8 +28,7 @@ Note that the base should be defined as a concat of base and
       ldap-or-keyword
       (getf connections ldap-or-keyword)))
 
-(defparameter *ldap* (make-8b-ldap))
-(defparameter *anon-ldap* (make-8b-ldap "" ""))
+
 
 (defmacro with-ldap (ldap-or-keyword &body body)
   "Execute BODY in the context of LDAP bound to the ldap server."
@@ -105,7 +67,7 @@ Note that the newline is not replaced by a space!"
                          attrs)
   "Get a single trivial-ldap:entry object by binding and searching.")
 
-(defun list-search-results (search-string &optional (ldap *anon-ldap*))
+(defun list-search-results (search-string &optional (ldap :anon))
   "List of entries from a search."
   (with-ldap ldap
     (ldap:search ldap search-string))
