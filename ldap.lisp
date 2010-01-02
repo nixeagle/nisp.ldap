@@ -68,12 +68,16 @@ Note that the base should be defined as a concat of base and
 (defparameter *ldap* (make-8b-ldap))
 (defparameter *anon-ldap* (make-8b-ldap "" ""))
 
-(defmacro with-ldap (ldap &body body)
+(defmacro with-ldap (ldap-or-keyword &body body)
   "Execute BODY in the context of LDAP bound to the ldap server."
-  `(prog2
-       (ldap:bind ,ldap)
-       (progn ,@body)
-     (ldap:unbind ,ldap)))
+  ;; I think this is fine to do instead of using gensyms. I'll consult
+  ;; on lisp on this later.
+  (let ((ldap (gensym)))
+    `(let ((,ldap (make-ldap ,ldap-or-keyword)))
+       (prog2
+           (ldap:bind ,ldap)
+           (progn ,@body)
+         (ldap:unbind ,ldap)))))
 
 (defun strip-newlines (string &optional (replace-char nil))
   "Given a string, remove all newlines.
