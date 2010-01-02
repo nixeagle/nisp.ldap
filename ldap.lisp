@@ -49,7 +49,8 @@ We default to anon bind.
 
 Note that the base should be defined as a concat of base and
 *root-base*."
-  (ldap:new-ldap :port *default-port*
+  (ldap:new-ldap :host *default-host*
+                 :port *default-port*
                  :user user
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
