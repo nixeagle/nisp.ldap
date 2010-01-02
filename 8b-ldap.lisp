@@ -28,6 +28,18 @@ Defautls to an empty string which means no pass.")
 (defvar *root-base* "dc=eighthbit,dc=net"
   "All 8b LDAP things are under this base.")
 
+;;; This is loaded only at load time of this file.
+(eval-when (:compile-toplevel :load-toplevel)
+  (defparameter +load-directory+
+    (make-pathname :directory
+                   (pathname-directory
+                    (load-time-value
+                     (or #.*compile-file-truename*
+                         #.*load-truename*))))
+    "nisp.8b-ldap root directory."))
+
+(load (merge-pathnames "config.lisp" +load-directory+) :if-does-not-exist nil)
+
 (defun make-8b-ldap (&optional (user "") (pass "")
                      (base ""))
   "Make an ldap object for 8b's ldap.
@@ -42,7 +54,5 @@ Note that the base should be defined as a concat of base and
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
 
-(setf (getf *connections* :anon) (make-8b-ldap))
-
-(defparameter *ldap* (make-8b-ldap))
-(defparameter *anon-ldap* (make-8b-ldap "" ""))
+(load (merge-pathnames "8b-ldap-connections.lisp" +load-directory+)
+      :if-does-not-exist nil)

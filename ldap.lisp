@@ -17,7 +17,7 @@
 
 ;;; Load an optional config file, the lack of this should not cause this
 ;;; program to become unusable.
-(load "config.lisp" :if-does-not-exist nil)
+
 
 
 (defun make-ldap (ldap-or-keyword
