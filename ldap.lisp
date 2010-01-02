@@ -27,6 +27,11 @@ Defautls to an empty string which means no pass.")
 (defvar *root-base* "dc=eighthbit,dc=net"
   "All 8b LDAP things are under this base.")
 
+(defparameter *connections* '()
+  "Property list of connections to LDAP.")
+
+
+
 ;;; Load an optional config file, the lack of this should not cause this
 ;;; program to become unusable.
 (load "config.lisp" :if-does-not-exist nil)
