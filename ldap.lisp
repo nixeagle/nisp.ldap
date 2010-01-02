@@ -33,7 +33,9 @@ Defautls to an empty string which means no pass.")
 
 (defun make-8b-ldap (&key (user *user*) (pass *pass*)
                      (base *root-base*))
-  "Make an ldap object for 8b's ldap."
+  "Make an ldap object for 8b's ldap.
+
+We default to anon bind."
   (ldap:new-ldap :port *default-port*
                  :user user
                  :pass pass
