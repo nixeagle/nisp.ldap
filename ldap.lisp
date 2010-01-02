@@ -96,11 +96,14 @@ Note that the newline is not replaced by a space!"
   (strip-newlines
    (ldap:ldif
     (with-ldap ldap
-      (ldap:search ldap search-string
+      (ldap:search (make-ldap ldap) search-string
                    :attributes attrs)
-      (ldap:next-search-result ldap)))
+      (ldap:next-search-result (make-ldap ldap))))
    #\ ))
 
+(defun get-single-entry (search-string &key (ldap :anon)
+                         attrs)
+  "Get a single trivial-ldap:entry object by binding and searching.")
 
 (defun list-search-results (search-string &optional (ldap *anon-ldap*))
   "List of entries from a search."
