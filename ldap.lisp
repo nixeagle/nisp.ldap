@@ -41,8 +41,8 @@ Defautls to an empty string which means no pass.")
 ;;; program to become unusable.
 (load "config.lisp" :if-does-not-exist nil)
 
-(defun make-8b-ldap (&optional (user *user*) (pass *pass*)
-                     (base *root-base*))
+(defun make-8b-ldap (&optional (user "") (pass "")
+                     (base ""))
   "Make an ldap object for 8b's ldap.
 
 We default to anon bind.
