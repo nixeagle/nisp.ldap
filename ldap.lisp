@@ -53,19 +53,20 @@ Note that the newline is not replaced by a space!"
       unless (eq char #\Newline) collect char)
    'string))
 
+(defun get-single-entry (search-string &key (ldap :anon)
+                         attrs)
+  "Get a single trivial-ldap:entry object by binding and searching."
+  (with-ldap ldap
+      (ldap:search (make-ldap ldap) search-string
+                   :attributes attrs)
+      (ldap:next-search-result (make-ldap ldap))))
+
 (defun print-single-entry (search-string &key (ldap :anon)
                            attrs)
   (strip-newlines
    (ldap:ldif
-    (with-ldap ldap
-      (ldap:search (make-ldap ldap) search-string
-                   :attributes attrs)
-      (ldap:next-search-result (make-ldap ldap))))
+    (get-single-entry search-string :ldap ldap :attrs attrs))
    #\ ))
-
-(defun get-single-entry (search-string &key (ldap :anon)
-                         attrs)
-  "Get a single trivial-ldap:entry object by binding and searching.")
 
 (defun list-search-results (search-string &optional (ldap :anon))
   "List of entries from a search."
