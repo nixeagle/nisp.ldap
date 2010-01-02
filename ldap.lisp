@@ -65,7 +65,7 @@ Note that the newline is not replaced by a space!"
                            attrs)
   (strip-newlines
    (ldap:ldif
-    (get-single-entry search-string :ldap ldap :attrs attrs))
+    (get-single-entry search-string :ldap (make-ldap ldap) :attrs attrs))
    #\ ))
 
 (defun list-search-results (search-string &optional (ldap :anon))
