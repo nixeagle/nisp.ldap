@@ -15,16 +15,6 @@
 This is not the default LDAP port, but we default to 2242 for ssh
 tunnels to LDAP.")
 
-(defvar *user* ""
-  "User to interact with LDAP as.
-
-Defaults to an empty string which means we are anonymous.")
-
-(defvar *pass* ""
-  "Password to auth to LDAP with.
-
-Defautls to an empty string which means no pass.")
-
 (defvar *root-base* "dc=eighthbit,dc=net"
   "All 8b LDAP things are under this base.")
 
