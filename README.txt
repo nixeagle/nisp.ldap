@@ -13,26 +13,3 @@ example:
 
 If config.lisp does not exist, nothing exciting happens.
 
-Table of Contents
-=================
-1 LDAP configuration thoughts 
-
-
-1 LDAP configuration thoughts 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  - net
-    - eighthbit
-      - irc
-        - channels
-          - All channels go under this tree.
-        - groups
-          - All groups go under this tree, roles/subgroups not
-            determined yet.
-        - users
-          - All users go under this tree.
-        - services
-          - LDAP users with special access to do special tasks.
-      - servers
-
-
