@@ -18,6 +18,13 @@ tunnels to LDAP.")
 (defvar *root-base* "dc=eighthbit,dc=net"
   "All 8b LDAP things are under this base.")
 
+(defvar +ldap-empty-group-user+
+  "uid=ldap_empty_group,ou=users,ou=irc,dc=eighthbit,dc=net"
+  "User that corresponds to a group that is empty.
+
+LDAP will make a groups last member this user when the group is emptied
+of all other members.")
+
 ;;; This is loaded only at load time of this file.
 (eval-when (:compile-toplevel :load-toplevel)
   (defparameter +load-directory+
