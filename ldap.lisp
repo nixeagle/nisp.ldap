@@ -1,7 +1,7 @@
 (defpackage #:nisp.ldap
   (:use :cl)
   (:export :*connections* #:with-ldap #:get-single-entry
-           #:one-line-ldif #:make-ldap))
+           #:one-line-ldif #:make-ldap #:describing-ldif-search))
 
 (in-package :nisp.ldap)
 
@@ -41,6 +41,13 @@
            (ldap:bind ,ldap)
            (progn ,@body)
          (ldap:unbind ,ldap)))))
+
+(defun describing-ldif-search (search-string &optional (ldap :anon))
+  "Development helper that prints a description of all search matches to
+standard output in ldif form."
+  (ldap:dosearch (it (ldap:search (make-ldap ldap) search-string))
+    (princ (concatenate 'string (ldap:ldif it) (list #\NewLine)))))
+
 
 (defun strip-newlines (string &optional (replace-char nil))
   "Given a string, remove all newlines.
