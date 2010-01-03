@@ -1,6 +1,7 @@
 (defpackage #:nisp.ldap
   (:use :cl)
-  (:export *connections* #:with-ldap #:get-single-entry))
+  (:export :*connections* #:with-ldap #:get-single-entry
+           #:one-line-ldif))
 
 (in-package :nisp.ldap)
 
@@ -60,6 +61,11 @@ Note that the newline is not replaced by a space!"
       (ldap:search (make-ldap ldap) search-string
                    :attributes attrs)
       (ldap:next-search-result (make-ldap ldap))))
+
+(defgeneric one-line-ldif (entry)
+  (:documentation "ldif on one line.")
+  (:method ((entry ldap:entry))
+    (strip-newlines (ldap:ldif entry) #\ )))
 
 (defun print-single-entry (search-string &key (ldap :anon)
                            attrs)
