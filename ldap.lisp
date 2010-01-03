@@ -13,7 +13,7 @@
      ,@body))
 
 
-(defparameter *connections* '()
+(defvar *connections* '()
   "Property list of connections to LDAP.")
 
 ;;; Load an optional config file, the lack of this should not cause this
