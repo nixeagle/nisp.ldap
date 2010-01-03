@@ -44,5 +44,11 @@ Note that the base should be defined as a concat of base and
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
 
+
+(defun format-x-bit-ircGroup-dn (name)
+  "Make ircGroup dn."
+  (format nil "ou=~A,ou=groups,ou=irc,dc=eighthbit,dc=net"
+          (string-capitalize name)))
+
 (load (merge-pathnames "8b-ldap-connections.lisp" +load-directory+)
       :if-does-not-exist nil)
