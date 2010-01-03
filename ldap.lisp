@@ -1,7 +1,7 @@
 (defpackage #:nisp.ldap
   (:use :cl)
   (:export :*connections* #:with-ldap #:get-single-entry
-           #:one-line-ldif))
+           #:one-line-ldif #:make-ldap))
 
 (in-package :nisp.ldap)
 
