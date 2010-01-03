@@ -51,6 +51,8 @@ Note that the base should be defined as a concat of base and
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
 
+;;; By default we will go ahead and setup an anon bind
+(setf (getf nisp.ldap::*connections* :anon) (make-8b-ldap))
 
 (defun format-x-bit-ircGroup-dn (name)
   "Make ircGroup dn."
