@@ -45,8 +45,9 @@
 (defun describing-ldif-search (search-string &optional (ldap :anon))
   "Development helper that prints a description of all search matches to
 standard output in ldif form."
-  (ldap:dosearch (it (ldap:search (make-ldap ldap) search-string))
-    (princ (concatenate 'string (ldap:ldif it) (list #\NewLine)))))
+  (mapc #'(lambda (x) 
+            (princ (ldap:ldif x))) 
+        (list-search-results search-string (make-ldap ldap))))
 
 
 (defun strip-newlines (string &optional (replace-char nil))
@@ -84,10 +85,10 @@ Note that the newline is not replaced by a space!"
 (defun list-search-results (search-string &optional (ldap :anon))
   "List of entries from a search."
   (with-ldap ldap
-    (ldap:search ldap search-string))
-  (let (result)
-    (while (ldap:results-pending-p ldap)
-      (push (ldap:next-search-result ldap) result))
-    (nreverse (cdr result))))
+    (ldap:search ldap search-string)
+    (let (result)
+      (while (ldap:results-pending-p ldap)
+        (push (ldap:next-search-result ldap) result))
+      (nreverse (cdr result)))))
 
 
