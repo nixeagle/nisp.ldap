@@ -108,3 +108,7 @@ Note that the newline is not replaced by a space!"
     (declare (ignore args))
     "Return LDAP ignoring ARGS."
     ldap))
+
+(defmethod trivial-ldap:search :around ((ldap t) (filter t) &key)
+  "Search LDAP for all records under specified base."
+  (call-next-method (compute-ldap ldap) (compute-filter filter)))
