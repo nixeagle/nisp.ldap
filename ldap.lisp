@@ -1,7 +1,18 @@
 (defpackage #:nisp.ldap
   (:use :cl)
+  (:shadow :delete :search)
   (:export :*connections* #:with-ldap #:get-single-entry
-           #:one-line-ldif #:make-ldap #:describing-ldif-search))
+           #:one-line-ldif #:make-ldap #:describing-ldif-search
+
+           ;; Generics to add your own "hooks" onto.  These are there
+           ;; for convience only, and likely will not exist in the same
+           ;; form 3 months from now as the way these are implemented is
+           ;; far from ideal. (These are done as around methods
+           ;; specializing on (T T), which means nobody else can write
+           ;; an around method to specialize on (T T). I'd vastly prefer
+           ;; adding another method selection :hook or similar.
+           #:compute-ldap #:compute-filter
+           ))
 
 (in-package :nisp.ldap)
 
