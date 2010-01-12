@@ -101,3 +101,10 @@ Note that the newline is not replaced by a space!"
 (defmethod compute-filter ((filter (eql :all)) &key)
   "Matches all objects."
   "(objectClass=*)")
+
+(defgeneric compute-ldap (ldap &rest args)
+  (:documentation "Make or select LDAP.")
+  (:method (ldap &rest args)
+    (declare (ignore args))
+    "Return LDAP ignoring ARGS."
+    ldap))
