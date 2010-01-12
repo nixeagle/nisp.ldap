@@ -91,3 +91,13 @@ Note that the newline is not replaced by a space!"
         (while (ldap:results-pending-p ldap)
           (push (ldap:next-search-result ldap) result))
         (nreverse (cdr result))))))
+
+(defgeneric compute-filter (type &rest args)
+  (:documentation "Compute an LDAP filter to do searches with.")
+  (:method (type &key)
+    "Return TYPE unchanged ignoring ARGS."
+    type))
+
+(defmethod compute-filter ((filter (eql :all)) &key)
+  "Matches all objects."
+  "(objectClass=*)")
