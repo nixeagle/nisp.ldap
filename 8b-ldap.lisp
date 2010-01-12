@@ -63,5 +63,10 @@ Note that the base should be defined as a concat of base and
   "Make ircUser dn."
   (format nil "uid=~A,ou=users,ou=irc,dc=eighthbit,dc=net" name))
 
+(defun new-x-bit-ircGroup (name &key (desc ""))
+  (ldap:new-entry (format-x-bit-ircGroup-dn name)
+                  :attrs `((ou ,(string-capitalize name))
+                           (description ,desc))))
+
 (load (merge-pathnames "8b-ldap-connections.lisp" +load-directory+)
       :if-does-not-exist nil)
