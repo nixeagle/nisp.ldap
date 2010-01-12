@@ -84,11 +84,10 @@ Note that the newline is not replaced by a space!"
 
 (defun list-search-results (search-string &optional (ldap :anon))
   "List of entries from a search."
-  (with-ldap ldap
-    (ldap:search ldap search-string)
-    (let (result)
-      (while (ldap:results-pending-p ldap)
-        (push (ldap:next-search-result ldap) result))
-      (nreverse (cdr result)))))
-
-
+  (let ((ldap (make-ldap ldap)))
+    (with-ldap ldap
+      (ldap:search ldap search-string)
+      (let (result)
+        (while (ldap:results-pending-p ldap)
+          (push (ldap:next-search-result ldap) result))
+        (nreverse (cdr result))))))
