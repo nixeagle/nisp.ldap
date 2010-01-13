@@ -8,7 +8,7 @@
   :version "0.0.12"
   :author "James S <dev@nixeagle.org>"
   :license "GPLv2 or later"
-  :depends-on (:trivial-ldap)
+  :depends-on (:trivial-ldap :closer-mop)
   :components
   ((:file "ldap")))
 
