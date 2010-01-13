@@ -30,7 +30,11 @@
 ;;; Load an optional config file, the lack of this should not cause this
 ;;; program to become unusable.
 
-
+(defclass abstract-filter ()
+  ()
+  ;; This feels right, but not positive how subclassing is going to work
+  ;; yet.
+  (:documentation "Base of all ldap filters."))
 
 (defun make-ldap (ldap-or-keyword
                   &optional (connections *connections*))
