@@ -36,6 +36,13 @@
   ;; yet.
   (:documentation "Base of all ldap filters."))
 
+(defclass message ()
+  ()
+  ;; I think this is what trivial-ldap is missing that does not feel
+  ;; "right". Messages are taken in as raw strings not as a CLOS class I
+  ;; can select on.
+  (:documentation "Base of all ldap messages."))
+
 (defun make-ldap (ldap-or-keyword
                   &optional (connections *connections*))
   "Return an LDAP object, so long as input is an ldap object or a
