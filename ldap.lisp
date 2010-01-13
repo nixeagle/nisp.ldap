@@ -43,11 +43,36 @@
   ;; can select on.
   (:documentation "Base of all ldap messages."))
 
-(defclass entry (trivial-ldap:entry)
+(defclass dn ()
+  ((dn :type string
+          :reader dn
+          :initarg :dn)
+   (modified-p :type boolean
+               :reader modified-p
+               :initform nil))
+  (:documentation "!!!")
+  (:default-initargs :dn ""))
+
+(defmethod (setf dn) ((value string)
+                      (object dn))
+  (setf (slot-value object 'modified-p) t)
+  (setf (slot-value object 'dn) value))
+
+(defclass rdn (dn)
   ()
+  (:documentation "!!!"))
+
+(defclass entry (trivial-ldap:entry)
+  ((dn :type dn
+       :reader dn
+       :initarg :dn)
+   (rdn :type rdn
+       :reader rdn
+       :initarg :rdn))
   (:documentation "Basic LDAP entry.
 
 Mostly used for method selection apart from trivial-ldap."))
+
 
 (defun make-ldap (ldap-or-keyword
                   &optional (connections *connections*))
