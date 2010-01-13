@@ -43,6 +43,12 @@
   ;; can select on.
   (:documentation "Base of all ldap messages."))
 
+(defclass entry (trivial-ldap:entry)
+  ()
+  (:documentation "Basic LDAP entry.
+
+Mostly used for method selection apart from trivial-ldap."))
+
 (defun make-ldap (ldap-or-keyword
                   &optional (connections *connections*))
   "Return an LDAP object, so long as input is an ldap object or a
