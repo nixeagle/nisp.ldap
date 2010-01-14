@@ -1,6 +1,10 @@
+(in-package :cl-user)
+
 (defpackage #:nisp.ldap
   (:use :cl)
   (:shadow :delete :search)
+  (:shadowing-import-from :closer-mop
+                          :defmethod)
   (:export :*connections* #:with-ldap #:get-single-entry
            #:one-line-ldif #:make-ldap #:describing-ldif-search
 
