@@ -51,8 +51,19 @@ Note that the base should be defined as a concat of base and
                  :pass pass
                  :base (concatenate 'string *root-base* base)))
 
+(defmacro define-simple-compute-ldap (keyword)
+  "Define a method to get KEYWORD from *CONNECTIONS*."
+  ;; This is a first pass only. Ideally more then just the keyword can
+  ;; be defined from the macro, as well as setting the user to an
+  ;; arbitrary hash or defining a class for each ldap user. Certainly
+  ;; not this kludge!
+  `(defmethod compute-ldap ((ldap (eql ,keyword)) &key)
+     ,(format nil "Connect to ldap as the ~A user." keyword)
+     (getf nisp.ldap::*connections* ,keyword)))
+
 ;;; By default we will go ahead and setup an anon bind
 (setf (getf nisp.ldap::*connections* :anon) (make-8b-ldap))
+(define-simple-compute-ldap :anon)
 
 (defun format-x-bit-ircGroup-dn (name)
   "Make ircGroup dn."
