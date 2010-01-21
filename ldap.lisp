@@ -55,7 +55,7 @@
                       :initform (get-universal-time)))
   (:documentation "Represents time of last modification"))
 
-(defclass modification (modification-time modification-state)
+(defclass modification (modification-state modification-time)
   ()
   (:documentation "Represents objects that remember modification data."))
 
