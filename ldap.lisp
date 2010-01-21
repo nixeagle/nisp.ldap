@@ -149,20 +149,16 @@ standard output in ldif form."
         (list-search-results search-string (make-ldap ldap))))
 
 
-(defun strip-newlines (string &optional (replace-char nil))
+(defun strip-newlines (string &optional (replace-char #\Space))
   "Given a string, remove all newlines.
 
 This is very irc specific where lines need to be all on one line.
 
 Note that the newline is not replaced by a space!"
-  (coerce
-   (iter (for char :in (coerce string 'list))
-         (when (and replace-char (eq char #\Newline))
-           (collect replace-char into out))
-         (unless (eq char #\Newline)
-           (collect char into out))
-         (finally (return out)))
-   'string))
+  (iter (for char :in-string string)
+        (collect (if (char= char #\Newline)
+                     replace-char
+                     char) :result-type string)))
 
 (defun get-single-entry (search-string &key (ldap :anon)
                          attrs)
@@ -189,10 +185,9 @@ Note that the newline is not replaced by a space!"
   (let ((ldap (make-ldap ldap)))
     (with-ldap ldap
       (ldap:search ldap search-string)
-      (let (result)
-        (iter (until (ldap:results-pending-p ldap))
-          (push (ldap:next-search-result ldap) result))
-        (nreverse (cdr result))))))
+      (iter (repeat 1000000)
+            (until (ldap:results-pending-p ldap))
+            (collect (ldap:next-search-result ldap))))))
 
 (defgeneric compute-filter (type &rest args)
   (:documentation "Compute an LDAP filter to do searches with.")
