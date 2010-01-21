@@ -41,7 +41,7 @@
   (:documentation "Base of all ldap messages."))
 
 (defgeneric (setf modification-time) (object))
-(defgeneric (setf modification-state) (object))
+(defgeneric (setf modification-state) (state object))
 (defgeneric (setf modification) (object))
 (defclass modification-state ()
   ((modification-state :type boolean
@@ -64,6 +64,15 @@
   ;; It makes no sense to allow any other value then "now" for modified
   ;; time.
   (setf (slot-value object 'modification-time) (get-universal-time)))
+
+(defmethod (setf modification-state) ((state t)
+                                      (object modification-state))
+  "Set modification state of OBJECT to STATE."
+  ;; We allow setting to false here as it is a legit operation to do on
+  ;; discarding changes, saving changes and so on.
+  (declare (type boolean state))
+  (setf (slot-value object 'modification-state) state))
+
 
 (defclass dn (modification)
   ((dn :type string
