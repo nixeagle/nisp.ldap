@@ -81,6 +81,9 @@
       (values state (call-next-method))
       state))
 
+(defmethod (setf modification-state) ((state t) (object modification))
+  "Set both modification time and state of OBJECT."
+  (call-next-method))
 
 (defclass dn (modification)
   ((dn :type string
