@@ -45,8 +45,12 @@
           :reader dn
           :initarg :dn)
    (modified-p :type boolean
+(defclass modification-state ()
+  ((modified-p :type boolean
                :reader modified-p
                :initform nil))
+  (:documentation "Represents a modified state."))
+
   (:documentation "!!!")
   (:default-initargs :dn ""))
 
