@@ -59,6 +59,12 @@
   ()
   (:documentation "Represents objects that remember modification data."))
 
+(defmethod (setf modification-time) ((object modification-time))
+  "Set the modification time of OBJECT to now."
+  ;; It makes no sense to allow any other value then "now" for modified
+  ;; time.
+  (setf (slot-value object 'modification-time) (get-universal-time)))
+
 (defclass dn (modification)
   ((dn :type string
        :reader dn
