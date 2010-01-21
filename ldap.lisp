@@ -1,7 +1,7 @@
 (in-package :cl-user)
 
 (defpackage #:nisp.ldap
-  (:use :cl)
+  (:use :cl :iterate)
   (:shadow :delete :search)
   (:shadowing-import-from :closer-mop
                           :defmethod)
@@ -19,13 +19,6 @@
            ))
 
 (in-package :nisp.ldap)
-
-;;; Needs to be moved to a seperate utility file or something.
-(defmacro while (test &body body)
-  "While, like in most other languages."
-  `(do ()
-       ((not ,test))
-     ,@body))
 
 
 (defvar *connections* '()
@@ -114,9 +107,12 @@ This is very irc specific where lines need to be all on one line.
 
 Note that the newline is not replaced by a space!"
   (coerce
-   (loop for char in (coerce string 'list)
-      when (and replace-char (eq char #\Newline)) collect replace-char
-      unless (eq char #\Newline) collect char)
+   (iter (for char :in (coerce string 'list))
+         (when (and replace-char (eq char #\Newline))
+           (collect replace-char into out))
+         (unless (eq char #\Newline)
+           (collect char into out))
+         (finally (return out)))
    'string))
 
 (defun get-single-entry (search-string &key (ldap :anon)
@@ -145,7 +141,7 @@ Note that the newline is not replaced by a space!"
     (with-ldap ldap
       (ldap:search ldap search-string)
       (let (result)
-        (while (ldap:results-pending-p ldap)
+        (iter (until (ldap:results-pending-p ldap))
           (push (ldap:next-search-result ldap) result))
         (nreverse (cdr result))))))
 
