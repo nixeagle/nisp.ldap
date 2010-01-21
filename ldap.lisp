@@ -69,14 +69,16 @@
   (declare (ignore state object)))
 (defmethod (setf modification-state) ((state t)
                                       (object modification-time))
-  (declare (ignore state))
   (setf (modification-time)  object))
+  (declare (type boolean state)
+           (ignore state))
 
 (defmethod (setf modification-state) ((state t)
                                       (object modification-state))
   "Set modification state of OBJECT to STATE."
   ;; We allow setting to false here as it is a legit operation to do on
   ;; discarding changes, saving changes and so on.
+  (declare (type boolean state))
   (setf (slot-value object 'modification-state) state)
   (if (next-method-p)
       (values state (call-next-method))
@@ -84,6 +86,7 @@
 
 (defmethod (setf modification-state) ((state t) (object modification))
   "Set both modification time and state of OBJECT."
+  (declare (type boolean state))
   (call-next-method))
 
 (defclass dn (modification)
