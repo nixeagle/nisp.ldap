@@ -48,8 +48,8 @@
 
 (defclass modification-time ()
   ;; Not fully implemented yet. Just prototyping.
-  ((modified-time :reader modified-time
-                  :initform 0))
+  ((modification-time :reader modification-time 
+                      :initform (get-universal-time)))
   (:documentation "Represents time of last modification"))
 
 (defclass modification (modification-time modification-state)
