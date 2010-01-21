@@ -52,6 +52,9 @@
                   :initform 0))
   (:documentation "Represents time of last modification"))
 
+(defclass modification (modification-time modification-state)
+  ()
+  (:documentation "Represents objects that remember modification data."))
 
 (defclass dn (modification-state)
   ((dn :type string
