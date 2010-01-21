@@ -41,9 +41,9 @@
   (:documentation "Base of all ldap messages."))
 
 (defclass modification-state ()
-  ((modified-p :type boolean
-               :reader modified-p
-               :initform nil))
+  ((modification-state :type boolean
+                       :reader modification-state 
+                       :initform nil))
   (:documentation "Represents a modified state."))
 
 (defclass modification-time ()
