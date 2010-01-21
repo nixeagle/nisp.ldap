@@ -63,6 +63,7 @@
   "Set the modification time of OBJECT to now."
   ;; It makes no sense to allow any other value then "now" for modified
   ;; time.
+  (setf (modification-state object) t))
 (defmethod (setf modification-state) ((state (eql nil))
                                       (object modification-time))
   (declare (ignore state object)))
