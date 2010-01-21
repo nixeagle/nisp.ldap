@@ -40,6 +40,9 @@
   ;; can select on.
   (:documentation "Base of all ldap messages."))
 
+(defgeneric (setf modification-time) (object))
+(defgeneric (setf modification-state) (object))
+(defgeneric (setf modification) (object))
 (defclass modification-state ()
   ((modification-state :type boolean
                        :reader modification-state 
