@@ -56,7 +56,7 @@
   ()
   (:documentation "Represents objects that remember modification data."))
 
-(defclass dn (modification-state)
+(defclass dn (modification)
   ((dn :type string
        :reader dn
        :initarg :dn))
