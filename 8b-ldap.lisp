@@ -74,6 +74,10 @@ Note that the base should be defined as a concat of base and
   "Make ircUser dn."
   (format nil "uid=~A,ou=users,ou=irc,dc=eighthbit,dc=net" name))
 
+(defun format-x-bit-ircChannel-dn (name)
+  "Make ircChannel dn."
+  (format nil "uid=~A,ou=channels,ou=irc,dc=eighthbit,dc=net" name))
+
 (defun new-x-bit-ircGroup (name &key (desc ""))
   (ldap:new-entry (format-x-bit-ircGroup-dn name)
                   :attrs `((ou ,(string-capitalize name))
