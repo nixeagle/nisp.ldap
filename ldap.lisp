@@ -1,7 +1,7 @@
 (in-package :cl-user)
 
 (defpackage #:nisp.ldap
-  (:use :cl :iterate)
+  (:use :cl :iterate :nisp.util-types)
   (:shadow :delete :search)
   (:shadowing-import-from :closer-mop
                           :defmethod)
