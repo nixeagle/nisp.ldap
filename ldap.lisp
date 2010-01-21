@@ -40,17 +40,20 @@
   ;; can select on.
   (:documentation "Base of all ldap messages."))
 
-(defclass dn ()
-  ((dn :type string
-          :reader dn
-          :initarg :dn)
-   (modified-p :type boolean
 (defclass modification-state ()
   ((modified-p :type boolean
                :reader modified-p
                :initform nil))
   (:documentation "Represents a modified state."))
 
+(defclass modification-time ()
+  ((modified-time :reader modification-time
+                  )))
+
+(defclass dn (modification-state)
+  ((dn :type string
+       :reader dn
+       :initarg :dn))
   (:documentation "!!!")
   (:default-initargs :dn ""))
 
