@@ -69,9 +69,12 @@
   (declare (ignore state object)))
 (defmethod (setf modification-state) ((state t)
                                       (object modification-time))
-  (setf (modification-time)  object))
   (declare (type boolean state)
            (ignore state))
+  (if (next-method-p)
+      (values (setf (modification-time) object) (call-next-method))
+      (setf (modification-time) object)))
+
 
 (defmethod (setf modification-state) ((state t)
                                       (object modification-state))
