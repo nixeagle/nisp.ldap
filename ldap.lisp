@@ -47,8 +47,11 @@
   (:documentation "Represents a modified state."))
 
 (defclass modification-time ()
-  ((modified-time :reader modification-time
-                  )))
+  ;; Not fully implemented yet. Just prototyping.
+  ((modified-time :reader modified-time
+                  :initform 0))
+  (:documentation "Represents time of last modification"))
+
 
 (defclass dn (modification-state)
   ((dn :type string
