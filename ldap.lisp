@@ -76,8 +76,10 @@
   "Set modification state of OBJECT to STATE."
   ;; We allow setting to false here as it is a legit operation to do on
   ;; discarding changes, saving changes and so on.
-  (declare (type boolean state))
-  (setf (slot-value object 'modification-state) state))
+  (setf (slot-value object 'modification-state) state)
+  (if (next-method-p)
+      (values state (call-next-method))
+      state))
 
 
 (defclass dn (modification)
