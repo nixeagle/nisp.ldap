@@ -127,8 +127,7 @@
 
 (defmethod (setf dn) ((value string)
                       (object dn))
-  (setf (modification-state object) t)
-  (setf (slot-value object 'dn) value))
+  (setf (modification-state object) t))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
