@@ -96,6 +96,11 @@
   (:documentation "Return the path to the object.
 
 `base' in ldap speak is the same meaning as pwd in a shell."))
+
+(defclass base-mixin ()
+  ()
+  (:documentation "LDAP objects where the concept of `base' makes sense."))
+
 (defclass abstract-base ()
   ((base :type (or string abstract-base)
          :reader base
