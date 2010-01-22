@@ -92,8 +92,8 @@
   (declare (type boolean state))
   (call-next-method))
 
-(defgeneric base (object)
-  (:documentation "Return the path to the object.
+(defgeneric base (ldap-object)
+  (:documentation "Return the path to the LDAP-OBJECT.
 
 `base' in ldap speak is the same meaning as pwd in a shell."))
 
