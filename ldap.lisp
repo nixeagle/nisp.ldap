@@ -142,9 +142,6 @@ the `base' they are in.")
    (base :type base :initarg :base))
   (:documentation "LDAP Distinguished Name"))
 
-(defmethod (setf dn) ((value string)
-                      (object dn))
-  (setf (modification-state object) t))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
