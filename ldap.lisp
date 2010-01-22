@@ -109,7 +109,7 @@
 
 (defmethod (setf dn) ((value string)
                       (object dn))
-  (setf (slot-value object 'modified-p) t)
+  (setf (modification-state object) t)
   (setf (slot-value object 'dn) value))
 
 (defclass rdn (dn)
