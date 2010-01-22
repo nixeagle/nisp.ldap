@@ -97,9 +97,19 @@
 
 `base' in ldap speak is the same meaning as pwd in a shell."))
 
+(defgeneric rdn (ldap-object)
+  (:documentation "Return the rdn of the LDAP-OBJECT.
+
+`rdn' is roughly equivalent to a filename in *nisp. They are unique to
+the `base' they are in."))
+
 (defclass base-mixin ()
   ()
   (:documentation "LDAP objects where the concept of `base' makes sense."))
+
+(defclass rdn-mixin ()
+  ()
+  (:documentation "LDAP objects where `rdn' makes sense."))
 
 (defclass abstract-base ()
   ((base :type (or string abstract-base)
