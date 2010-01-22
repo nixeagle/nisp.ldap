@@ -116,7 +116,7 @@ the `base' they are in.")
     (error "Redefine `rdn' on the subclass of rdn-mixin.")))
 
 (defclass abstract-base (base-mixin)
-  ((base :type (or string abstract-base)
+  ((base :type string 
          :reader base
          :initarg :base
          :documentation "LDAP base path: equivalent to 'ls' on *nix."))
@@ -124,7 +124,7 @@ the `base' they are in.")
   (:default-initargs :base ""))
 
 (defclass abstract-rdn (rdn-mixin)
-  ((rdn :type (or string abstract-rdn)
+  ((rdn :type string 
         :reader rdn
         :initarg :rdn))
   (:documentation "!!!")
