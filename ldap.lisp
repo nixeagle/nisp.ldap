@@ -135,9 +135,10 @@ the `base' they are in.")
 (defclass rdn (abstract-rdn modification)
   ())
 
-(defclass dn (abstract-rdn abstract-base modification-state)
-  ((rdn))
-  (:documentation "!!!"))
+(defclass dn (rdn-mixin base-mixin modification-state)
+  ((rdn :type rdn :initarg :rdn)
+   (base :type base :initarg :base))
+  (:documentation "LDAP Distinguished Name"))
 
 (defmethod (setf dn) ((value string)
                       (object dn))
