@@ -111,7 +111,7 @@
 `rdn' is roughly equivalent to a filename in *nisp. They are unique to
 the `base' they are in."))
 
-(defclass abstract-base ()
+(defclass abstract-base (base-mixin)
   ((base :type (or string abstract-base)
          :reader base
          :initarg :base
@@ -119,7 +119,7 @@ the `base' they are in."))
   (:documentation "Represents LDAP base path.")
   (:default-initargs :base ""))
 
-(defclass abstract-rdn ()
+(defclass abstract-rdn (rdn-mixin)
   ((rdn :type (or string abstract-rdn)
         :reader rdn
         :initarg :rdn))
