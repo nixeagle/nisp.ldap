@@ -92,6 +92,14 @@
   (declare (type boolean state))
   (call-next-method))
 
+(defclass base-mixin ()
+  ()
+  (:documentation "LDAP objects where the concept of `base' makes sense."))
+
+(defclass rdn-mixin ()
+  ()
+  (:documentation "LDAP objects where `rdn' makes sense."))
+
 (defgeneric base (ldap-object)
   (:documentation "Return the path to the LDAP-OBJECT.
 
@@ -102,14 +110,6 @@
 
 `rdn' is roughly equivalent to a filename in *nisp. They are unique to
 the `base' they are in."))
-
-(defclass base-mixin ()
-  ()
-  (:documentation "LDAP objects where the concept of `base' makes sense."))
-
-(defclass rdn-mixin ()
-  ()
-  (:documentation "LDAP objects where `rdn' makes sense."))
 
 (defclass abstract-base ()
   ((base :type (or string abstract-base)
