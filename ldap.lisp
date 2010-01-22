@@ -92,6 +92,14 @@
   (declare (type boolean state))
   (call-next-method))
 
+(defclass base (modification)
+  ((base :type string
+         :reader base
+         :initarg :base
+         :documentation "LDAP base path: equivalent to 'ls' on *nix."))
+  (:documentation "Represents LDAP base path.")
+  (:default-initargs :base ""))
+
 (defclass dn (modification)
   ((dn :type string
        :reader dn
