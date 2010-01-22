@@ -96,27 +96,29 @@
   (:documentation "Return the path to the object.
 
 `base' in ldap speak is the same meaning as pwd in a shell."))
+(defclass abstract-base ()
+  ((base :type (or string abstract-base)
          :reader base
          :initarg :base
          :documentation "LDAP base path: equivalent to 'ls' on *nix."))
   (:documentation "Represents LDAP base path.")
   (:default-initargs :base ""))
 
-(defclass rdn (modification)
-  ((rdn :type string
+(defclass abstract-rdn ()
+  ((rdn :type (or string abstract-rdn)
         :reader rdn
         :initarg :rdn))
   (:documentation "!!!")
   (:default-initargs :rdn ""))
 
-(defclass dn (modification)
-  ((dn :type string
-       :reader dn
-       :initarg :dn))
-  (:documentation "!!!")
-  (:default-initargs :dn ""))
 (defclass base (abstract-base modification)
   ())
+(defclass rdn (abstract-rdn modification)
+  ())
+
+(defclass dn (abstract-rdn abstract-base modification-state)
+  ((rdn))
+  (:documentation "!!!"))
 
 (defmethod (setf dn) ((value string)
                       (object dn))
