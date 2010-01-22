@@ -103,13 +103,17 @@
 (defgeneric base (ldap-object)
   (:documentation "Return the path to the LDAP-OBJECT.
 
-`base' in ldap speak is the same meaning as pwd in a shell."))
+`base' in ldap speak is the same meaning as pwd in a shell.")
+  (:method ((ldap base-mixin))
+    (error "Redefine `base' on the subclass of base-mixin.")))
 
 (defgeneric rdn (ldap-object)
   (:documentation "Return the rdn of the LDAP-OBJECT.
 
 `rdn' is roughly equivalent to a filename in *nisp. They are unique to
-the `base' they are in."))
+the `base' they are in.")
+  (:method ((ldap rdn-mixin))
+    (error "Redefine `rdn' on the subclass of rdn-mixin.")))
 
 (defclass abstract-base (base-mixin)
   ((base :type (or string abstract-base)
@@ -141,11 +145,9 @@ the `base' they are in."))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
-       :reader dn
        :initarg :dn)
    (rdn :type rdn
-       :reader rdn
-       :initarg :rdn))
+        :initarg :rdn))
   (:documentation "Basic LDAP entry.
 
 Mostly used for method selection apart from trivial-ldap."))
