@@ -112,9 +112,12 @@
   (setf (modification-state object) t)
   (setf (slot-value object 'dn) value))
 
-(defclass rdn (dn)
-  ()
-  (:documentation "!!!"))
+(defclass rdn (modification)
+  ((rdn :type string
+        :reader rdn
+        :initarg :rdn))
+  (:documentation "!!!")
+  (:default-initargs :rdn ""))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
