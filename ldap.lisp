@@ -92,8 +92,10 @@
   (declare (type boolean state))
   (call-next-method))
 
-(defclass base (modification)
-  ((base :type string
+(defgeneric base (object)
+  (:documentation "Return the path to the object.
+
+`base' in ldap speak is the same meaning as pwd in a shell."))
          :reader base
          :initarg :base
          :documentation "LDAP base path: equivalent to 'ls' on *nix."))
@@ -113,6 +115,8 @@
        :initarg :dn))
   (:documentation "!!!")
   (:default-initargs :dn ""))
+(defclass base (abstract-base modification)
+  ())
 
 (defmethod (setf dn) ((value string)
                       (object dn))
