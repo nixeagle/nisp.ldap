@@ -100,6 +100,13 @@
   (:documentation "Represents LDAP base path.")
   (:default-initargs :base ""))
 
+(defclass rdn (modification)
+  ((rdn :type string
+        :reader rdn
+        :initarg :rdn))
+  (:documentation "!!!")
+  (:default-initargs :rdn ""))
+
 (defclass dn (modification)
   ((dn :type string
        :reader dn
@@ -111,13 +118,6 @@
                       (object dn))
   (setf (modification-state object) t)
   (setf (slot-value object 'dn) value))
-
-(defclass rdn (modification)
-  ((rdn :type string
-        :reader rdn
-        :initarg :rdn))
-  (:documentation "!!!")
-  (:default-initargs :rdn ""))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
