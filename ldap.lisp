@@ -142,6 +142,10 @@ the `base' they are in.")
    (base :type base :initarg :base))
   (:documentation "LDAP Distinguished Name"))
 
+(defmethod rdn ((rdn dn))
+  (rdn (slot-value rdn 'rdn)))
+(defmethod base ((base dn))
+  (base (slot-value base 'base)))
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
