@@ -223,7 +223,7 @@ Note that the newline is not replaced by a space!"
     (with-ldap ldap
       (ldap:search ldap search-string)
       (iter (repeat 1000000)
-            (until (ldap:results-pending-p ldap))
+            (until (not (ldap:results-pending-p ldap)))
             (collect (ldap:next-search-result ldap))))))
 
 (defgeneric compute-filter (type &rest args)
