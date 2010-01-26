@@ -253,7 +253,7 @@ Note that the newline is not replaced by a space!"
   "List of entries from a search."
   (let ((ldap (make-ldap ldap)))
     (with-ldap ldap
-      (ldap:search ldap search-string)
+      (search ldap search-string)
       (list-all-pending ldap))))
 
 (defgeneric compute-filter (type &rest args)
