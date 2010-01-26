@@ -151,10 +151,6 @@ Objects inheriting this should default this to something sensible."))
    (base :type base :initarg :base))
   (:documentation "LDAP Distinguished Name"))
 
-(defmethod rdn ((rdn dn))
-  (rdn (slot-value rdn 'rdn)))
-(defmethod base ((base dn))
-  (base (slot-value base 'base)))
 
 (defclass organizational-unit (dn ldap-entry-mixin)
   ()
