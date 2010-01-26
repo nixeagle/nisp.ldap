@@ -17,7 +17,7 @@
            ;; adding another method selection :hook or similar.
            #:compute-ldap #:compute-filter
 
-           :dn :base :rdn
+           :dn :base :rdn :organizational-unit
            ))
 
 (in-package :nisp.ldap)
@@ -155,6 +155,11 @@ Objects inheriting this should default this to something sensible."))
   (rdn (slot-value rdn 'rdn)))
 (defmethod base ((base dn))
   (base (slot-value base 'base)))
+
+(defclass organizational-unit (dn ldap-entry-mixin)
+  ()
+  (:default-initargs :rdn-key "ou"))
+
 
 (defclass entry (trivial-ldap:entry)
   ((dn :type dn
