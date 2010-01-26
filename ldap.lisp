@@ -117,13 +117,13 @@ the `base' they are in.")
   (:method ((ldap rdn-mixin))
     (error "Redefine `rdn' on the subclass of rdn-mixin.")))
 
-(defclass abstract-base (base-mixin)
-  ((base :type string 
+(defclass base (base-mixin)
+  ((base :type string
+         :initform (error "A LDAP object without a base makes no sense!")
          :reader base
          :initarg :base
          :documentation "LDAP base path: equivalent to 'ls' on *nix."))
-  (:documentation "Represents LDAP base path.")
-  (:default-initargs :base ""))
+  (:documentation "Represents LDAP base path."))
 
 (defclass abstract-rdn (rdn-mixin)
   ((rdn :type string 
@@ -132,8 +132,6 @@ the `base' they are in.")
   (:documentation "!!!")
   (:default-initargs :rdn ""))
 
-(defclass base (abstract-base modification)
-  ())
 (defclass rdn (abstract-rdn modification)
   ())
 
