@@ -136,12 +136,10 @@ the `base' they are in.")
   (:documentation "!!!")
   (:default-initargs :rdn ""))
 
-(defclass rdn (abstract-rdn modification)
-  ())
-
 (defclass rdn-key ()
   ((rdn-key :initarg :rdn-key
             :type string
+            :reader rdn-key
             :initform (error "rdn-key needs to be defaulted to a sensible value.")))
   (:documentation "key value for a rdn field.
 
@@ -150,6 +148,20 @@ Objects inheriting this should default this to something sensible."))
 (defclass dn (dn-mixin modification-state)
   ((rdn :type rdn :initarg :rdn)
    (base :type base :initarg :base))
+(defclass rdn-value ()
+  ((rdn-value :initarg :rdn-value
+              :reader rdn-value
+              :type string
+              :initform (error "rdn value must be specified by the instance.")))
+  (:documentation "Value of an instance's RDN. ~
+  This should be unique at the current dn scope."))
+
+(defclass rdn (rdn-key rdn-value)
+  ())
+(defmethod rdn ((rdn rdn))
+  (concatenate 'string (rdn-key rdn)
+               "=" (rdn-value rdn)))
+
   (:documentation "LDAP Distinguished Name"))
 
 
