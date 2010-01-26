@@ -75,6 +75,15 @@ Note that the base should be defined as a concat of base and
   (format nil "ou=~A,ou=groups,ou=irc,dc=eighthbit,dc=net"
           (string-capitalize name)))
 
+
+(defun add-irc-group (name description &rest members)
+  (ldap:new-entry (concatenate 'string
+                               "ou="
+                               name
+                               ",ou=groups,ou=irc,dc=eighthbit,dc=net")
+                  :attrs `((description ,description)
+                           (objectclass "x-bit-ircGroup" "top")
+                           (member ,@members))))
 (defun format-x-bit-ircUser-dn (name)
   "Make ircUser dn."
   (format nil "uid=~A,ou=users,ou=irc,dc=eighthbit,dc=net" name))
