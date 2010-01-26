@@ -146,7 +146,6 @@ the `base' they are in.")
   (:documentation "key value for a rdn field.
 
 Objects inheriting this should default this to something sensible."))
-(defclass dn-mixin (rdn-mixin base-mixin) ())
 
 (defclass dn (dn-mixin modification-state)
   ((rdn :type rdn :initarg :rdn)
@@ -157,6 +156,9 @@ Objects inheriting this should default this to something sensible."))
 (defclass organizational-unit (dn ldap-entry-mixin)
   ()
   (:default-initargs :rdn-key "ou"))
+
+(defclass dn-mixin (rdn-mixin base-mixin) ())
+
 
 
 (defclass entry (trivial-ldap:entry)
