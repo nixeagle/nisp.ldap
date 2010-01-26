@@ -29,6 +29,10 @@
 ;;; Load an optional config file, the lack of this should not cause this
 ;;; program to become unusable.
 
+(defclass ldap-entry-mixin () ()
+  (:documentation "Entrys where it makes sense to translate to ldif or ~
+  trivial-ldap entries."))
+
 (defclass abstract-filter ()
   ()
   ;; This feels right, but not positive how subclassing is going to work
