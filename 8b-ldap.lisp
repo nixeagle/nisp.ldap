@@ -65,6 +65,11 @@ Note that the base should be defined as a concat of base and
 (setf (getf nisp.ldap::*connections* :anon) (make-8b-ldap))
 (define-simple-compute-ldap :anon)
 
+
+(defclass irc-group (organizational-unit base)
+  ()
+  (:default-initargs :base "ou=groups,ou=irc,dc=eighthbit,dc=net"))
+
 (defun format-x-bit-ircGroup-dn (name)
   "Make ircGroup dn."
   (format nil "ou=~A,ou=groups,ou=irc,dc=eighthbit,dc=net"
