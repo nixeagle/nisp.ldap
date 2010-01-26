@@ -137,6 +137,13 @@ the `base' they are in.")
 (defclass rdn (abstract-rdn modification)
   ())
 
+(defclass rdn-key ()
+  ((rdn-key :initarg :rdn-key
+            :type string
+            :initform (error "rdn-key needs to be defaulted to a sensible value.")))
+  (:documentation "key value for a rdn field.
+
+Objects inheriting this should default this to something sensible."))
 (defclass dn-mixin (rdn-mixin base-mixin) ())
 
 (defclass dn (dn-mixin modification-state)
