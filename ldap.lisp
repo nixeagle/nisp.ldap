@@ -144,10 +144,6 @@ the `base' they are in.")
   (:documentation "key value for a rdn field.
 
 Objects inheriting this should default this to something sensible."))
-
-(defclass dn (dn-mixin modification-state)
-  ((rdn :type rdn :initarg :rdn)
-   (base :type base :initarg :base))
 (defclass rdn-value ()
   ((rdn-value :initarg :rdn-value
               :reader rdn-value
@@ -162,8 +158,12 @@ Objects inheriting this should default this to something sensible."))
   (concatenate 'string (rdn-key rdn)
                "=" (rdn-value rdn)))
 
+(defclass dn (rdn base)
+  ()
   (:documentation "LDAP Distinguished Name"))
 
+(defmethod dn ((dn dn))
+  (concatenate 'string (rdn dn) "," (base dn)))
 
 (defclass organizational-unit (dn ldap-entry-mixin)
   ()
