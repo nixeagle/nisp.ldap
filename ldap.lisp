@@ -217,14 +217,18 @@ Note that the newline is not replaced by a space!"
     (get-single-entry search-string :ldap (make-ldap ldap) :attrs attrs))
    #\ ))
 
+(defun list-all-pending (&optional (ldap :anon))
+  "Dump all pending results on LDAP."
+  (iter (repeat 1000000)
+            (until (not (ldap:results-pending-p ldap)))
+            (collect (ldap:next-search-result ldap))))
+
 (defun list-search-results (search-string &optional (ldap :anon))
   "List of entries from a search."
   (let ((ldap (make-ldap ldap)))
     (with-ldap ldap
       (ldap:search ldap search-string)
-      (iter (repeat 1000000)
-            (until (not (ldap:results-pending-p ldap)))
-            (collect (ldap:next-search-result ldap))))))
+      (list-all-pending ldap))))
 
 (defgeneric compute-filter (type &rest args)
   (:documentation "Compute an LDAP filter to do searches with.")
