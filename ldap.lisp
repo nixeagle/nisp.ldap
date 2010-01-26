@@ -16,6 +16,8 @@
            ;; an around method to specialize on (T T). I'd vastly prefer
            ;; adding another method selection :hook or similar.
            #:compute-ldap #:compute-filter
+
+           :dn :base :rdn
            ))
 
 (in-package :nisp.ldap)
