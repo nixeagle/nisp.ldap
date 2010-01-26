@@ -273,6 +273,7 @@ Note that the newline is not replaced by a space!"
     "Return LDAP ignoring ARGS."
     ldap))
 
-(defmethod trivial-ldap:search :around ((ldap t) (filter t) &key)
+(defgeneric search (ldap filter &key &allow-other-keys))
+(defmethod search ((ldap t) (filter t) &rest keys)
   "Search LDAP for all records under specified base."
-  (call-next-method (compute-ldap ldap) (compute-filter filter)))
+  (apply #'trivial-ldap:search (compute-ldap ldap) (compute-filter filter) keys))
