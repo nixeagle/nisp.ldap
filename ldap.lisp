@@ -7,7 +7,7 @@
                           :defmethod)
   (:export :*connections* #:with-ldap #:get-single-entry
            #:one-line-ldif #:make-ldap #:describing-ldif-search
-
+           #:list-search-results
            ;; Generics to add your own "hooks" onto.  These are there
            ;; for convience only, and likely will not exist in the same
            ;; form 3 months from now as the way these are implemented is
@@ -168,6 +168,9 @@ Objects inheriting this should default this to something sensible."))
 (defclass organizational-unit (dn ldap-entry-mixin)
   ()
   (:default-initargs :rdn-key "ou"))
+
+(defclass user-identifier (dn ldap-entry-mixin)
+  ())
 
 (defclass dn-mixin (rdn-mixin base-mixin) ())
 
