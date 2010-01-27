@@ -70,20 +70,33 @@ Note that the base should be defined as a concat of base and
   ()
   (:default-initargs :base "ou=groups,ou=irc,dc=eighthbit,dc=net"))
 
-(defun format-x-bit-ircGroup-dn (name)
-  "Make ircGroup dn."
-  (format nil "ou=~A,ou=groups,ou=irc,dc=eighthbit,dc=net"
-          (string-capitalize name)))
 
 
-(defun add-irc-group (name description &rest members)
+(defun make-ldap-irc-group (name description &rest members)
   (ldap:new-entry (concatenate 'string
                                "ou="
                                name
                                ",ou=groups,ou=irc,dc=eighthbit,dc=net")
                   :attrs `((description ,description)
                            (objectclass "x-bit-ircGroup" "top")
-                           (member ,@members))))
+                           ,(and members `(member ,@members)))))
+
+(defun make-ldap-irc-role-group (name parent-group description &rest members)
+  (ldap:new-entry (concatenate 'string
+                               "ou="
+                               name
+                               ",ou="
+                               parent-group
+                               ",ou=groups,ou=irc,dc=eighthbit,dc=net")
+                  :attrs `((ou ,name)
+                           (description ,description)
+                           (objectclass "x-bit-ircGroup" "top")
+                           
+                           (member ,@(if members
+                                         members
+                                         (list "uid=ldap_empty_group,ou=users,ou=irc,dc=eighthbit,dc=net"))))))
+
+(defclass irc-user () ())
 (defun format-x-bit-ircUser-dn (name)
   "Make ircUser dn."
   (format nil "uid=~A,ou=users,ou=irc,dc=eighthbit,dc=net" name))
